@@ -2,26 +2,32 @@ use std::fs;
 
 pub fn part_1(inp: String) -> i32 {
     let input = parse_input(inp);
-    let mut score = 0;
+    let mut my_score = 0;
+    let mut opponent_score = 0;
 
     for g in input {
         let game = Game::from_hands(&g);
-        score += rock_paper_scissors(&game);
+        let scores = game.rock_paper_scissors();
+        opponent_score += scores.0;
+        my_score += scores.1;
     }
 
-    score
+    my_score
 }
 
 pub fn part_2(inp: String) -> i32 {
     let input = parse_input(inp);
-    let mut score = 0;
+    let mut my_score = 0;
+    let mut opponent_score = 0;
 
     for g in input {
         let game = Game::from_strategy(&g);
-        score += rock_paper_scissors(&game);
+        let scores = game.rock_paper_scissors();
+        opponent_score += scores.0;
+        my_score += scores.1;
     }
 
-    score
+    my_score
 }
 
 enum Hand {
@@ -109,40 +115,73 @@ impl Game {
 
         game
     }
-}
 
-fn rock_paper_scissors(game: &Game) -> i32 {
-    let mut score = match game.me {
-        Hand::Rock => 1,
-        Hand::Paper => 2,
-        Hand::Scissors => 3,
-    };
+    fn rock_paper_scissors(&self) -> (i32, i32) {
+        let mut my_score = match self.me {
+            Hand::Rock => 1,
+            Hand::Paper => 2,
+            Hand::Scissors => 3,
+        };
 
-    match game.opponent {
-        Hand::Rock => {
-            match game.me {
-                Hand::Rock => score += 3,
-                Hand::Paper => score += 6,
-                Hand::Scissors => score += 0,
-            };
+        let mut oppoent_score = match self.opponent {
+            Hand::Rock => 1,
+            Hand::Paper => 2,
+            Hand::Scissors => 3,
+        };
+
+        match self.opponent {
+            Hand::Rock => {
+                match self.me {
+                    Hand::Rock => {
+                        my_score += 3;
+                        oppoent_score += 3;
+                    }
+                    Hand::Paper => {
+                        my_score += 6;
+                        oppoent_score += 0;
+                    }
+                    Hand::Scissors => {
+                        my_score += 0;
+                        oppoent_score += 6
+                    }
+                };
+            }
+            Hand::Paper => {
+                match self.me {
+                    Hand::Rock => {
+                        my_score += 0;
+                        oppoent_score += 6;
+                    }
+                    Hand::Paper => {
+                        my_score += 3;
+                        oppoent_score += 3;
+                    }
+                    Hand::Scissors => {
+                        my_score += 6;
+                        oppoent_score += 0;
+                    }
+                };
+            }
+            Hand::Scissors => {
+                match self.me {
+                    Hand::Rock => {
+                        my_score += 6;
+                        oppoent_score += 0;
+                    }
+                    Hand::Paper => {
+                        my_score += 0;
+                        oppoent_score += 6;
+                    }
+                    Hand::Scissors => {
+                        my_score += 3;
+                        oppoent_score += 3;
+                    }
+                };
+            }
         }
-        Hand::Paper => {
-            match game.me {
-                Hand::Rock => score += 0,
-                Hand::Paper => score += 3,
-                Hand::Scissors => score += 6,
-            };
-        }
-        Hand::Scissors => {
-            match game.me {
-                Hand::Rock => score += 6,
-                Hand::Paper => score += 0,
-                Hand::Scissors => score += 3,
-            };
-        }
+
+        (oppoent_score, my_score)
     }
-
-    score
 }
 
 fn parse_input(path: String) -> Vec<String> {
