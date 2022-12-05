@@ -3,12 +3,12 @@ use std::fs;
 pub fn part_1(inp: String) -> i32 {
     let input = parse_input(inp);
     let mut my_score = 0;
-    let mut opponent_score = 0;
+    let mut _opponent_score = 0;
 
     for g in input {
         let game = Game::from_hands(&g);
         let scores = game.rock_paper_scissors();
-        opponent_score += scores.0;
+        _opponent_score += scores.0;
         my_score += scores.1;
     }
 
@@ -18,12 +18,12 @@ pub fn part_1(inp: String) -> i32 {
 pub fn part_2(inp: String) -> i32 {
     let input = parse_input(inp);
     let mut my_score = 0;
-    let mut opponent_score = 0;
+    let mut _opponent_score = 0;
 
     for g in input {
         let game = Game::from_strategy(&g);
         let scores = game.rock_paper_scissors();
-        opponent_score += scores.0;
+        _opponent_score += scores.0;
         my_score += scores.1;
     }
 
