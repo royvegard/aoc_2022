@@ -39,11 +39,9 @@ pub fn part_2(inp: String) -> usize {
         group.push(s);
         if (i + 1) % 3 == 0 {
             for c in group[0].chars() {
-                if group[1].contains(c) {
-                    if group[2].contains(c) {
-                        badge = c;
-                        break;
-                    }
+                if group[1].contains(c) && group[2].contains(c) {
+                    badge = c;
+                    break;
                 }
             }
             group.clear();

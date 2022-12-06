@@ -12,16 +12,16 @@ pub fn part_1(inp: String) -> String {
 
     let mut stack_index: Vec<usize> = Vec::new();
     for (i, c) in setup.last().unwrap().chars().enumerate() {
-        if c.is_digit(10) {
+        if c.is_ascii_digit() {
             stack_index.push(i);
-            stacks.push(vec![c.clone()]);
+            stacks.push(vec![c]);
         }
     }
     for l in setup.iter().rev() {
         for (i, s) in stacks.iter_mut().enumerate() {
             let cr = l.chars().nth(stack_index[i]).unwrap();
             if cr.is_alphabetic() {
-                s.push(cr.clone());
+                s.push(cr);
             }
         }
     }
@@ -43,7 +43,7 @@ pub fn part_1(inp: String) -> String {
     let mut top_crates: String = String::new();
 
     for s in stacks {
-        top_crates.push(s.last().unwrap().clone());
+        top_crates.push(*s.last().unwrap());
     }
 
     top_crates
@@ -61,16 +61,16 @@ pub fn part_2(inp: String) -> String {
 
     let mut stack_index: Vec<usize> = Vec::new();
     for (i, c) in setup.last().unwrap().chars().enumerate() {
-        if c.is_digit(10) {
+        if c.is_ascii_digit() {
             stack_index.push(i);
-            stacks.push(vec![c.clone()]);
+            stacks.push(vec![c]);
         }
     }
     for l in setup.iter().rev() {
         for (i, s) in stacks.iter_mut().enumerate() {
             let cr = l.chars().nth(stack_index[i]).unwrap();
             if cr.is_alphabetic() {
-                s.push(cr.clone());
+                s.push(cr);
             }
         }
     }
@@ -91,15 +91,14 @@ pub fn part_2(inp: String) -> String {
     let mut top_crates: String = String::new();
 
     for s in stacks {
-        top_crates.push(s.last().unwrap().clone());
+        top_crates.push(*s.last().unwrap());
     }
 
     top_crates
 }
 
 fn parse_input(path: String) -> String {
-    let input = fs::read_to_string(path).expect("Something went wrong");
-    input
+    fs::read_to_string(path).expect("Something went wrong")
 }
 
 #[cfg(test)]

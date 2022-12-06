@@ -40,8 +40,7 @@ pub fn part_2(inp: String) -> usize {
 }
 
 fn parse_input(path: String) -> String {
-    let input = fs::read_to_string(path).expect("Something went wrong");
-    input
+    fs::read_to_string(path).expect("Something went wrong")
 }
 
 #[cfg(test)]

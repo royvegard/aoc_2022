@@ -16,9 +16,9 @@ pub fn part_1(inp: String) -> usize {
             elf2_range.0.parse::<usize>().unwrap(),
             elf2_range.1.parse::<usize>().unwrap(),
         );
-        if elf1_range.0 <= elf2_range.0 && elf1_range.1 >= elf2_range.1 {
-            sum += 1;
-        } else if elf2_range.0 <= elf1_range.0 && elf2_range.1 >= elf1_range.1 {
+        if (elf1_range.0 <= elf2_range.0 && elf1_range.1 >= elf2_range.1)
+            || (elf2_range.0 <= elf1_range.0 && elf2_range.1 >= elf1_range.1)
+        {
             sum += 1;
         }
     }
