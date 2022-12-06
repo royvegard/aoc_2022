@@ -3,6 +3,7 @@ mod day_02;
 mod day_03;
 mod day_04;
 mod day_05;
+mod day_06;
 
 fn main() {
     println!("Day 1: Calorie Counting");
@@ -53,5 +54,15 @@ fn main() {
     println!(
         "\tPart two: {}",
         day_05::part_2(String::from("input/day_05"))
+    );
+
+    println!("Day 6: Tuning Trouble");
+    println!(
+        "\tPart one: {}",
+        day_06::part_1(String::from("input/day_06"))
+    );
+    println!(
+        "\tPart two: {}",
+        day_06::part_2(String::from("input/day_06"))
     );
 }
